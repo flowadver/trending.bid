@@ -5,34 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <script>
-        function readDomainFromFile(callback) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'domain.txt', true);
-            
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var domains = xhr.responseText.trim().split('\n');
-                        var randomIndex = Math.floor(Math.random() * domains.length);
-                        var domain = domains[randomIndex].trim();
-                        callback(domain);
-                    } else {
-                        console.error('Failed to read domain.txt');
-                    }
-                }
-            };
-            
-            xhr.send();
-        }
-
-        function generateClickId(length) {
-            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var clickId = '';
-            for (var i = 0; i < length; i++) {
-                clickId += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return clickId;
-        }
+       function generateClickId(length) {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    var clickId = '';
+    for (var i = 0; i < length; i++) {
+        clickId += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return clickId;
+}
 
         function generateRandomNumber(length) {
             var number = '';
@@ -43,60 +23,57 @@
         }
 
         function generateCreativeId() {
-            var popId = generateRandomNumber(10); 
-            return 'v2_' + popId;
-        }
+    var popId = generateRandomNumber(10); 
+    return popId;
+}
 
-        function generateSourceId() {
-            var timestamp = Date.now().toString();
-            return 'ts_' + timestamp;
-        }
+       function generateSourceId() {
+    var timestamp = Date.now().toString();
+    return timestamp;
+}
 
         function redirectToPartnersPage() {
             window.location.href = 'https://ankiajkgska9890.blogspot.com/';
         }
 
         function addUtmSourceFromDomain(url) {
-            readDomainFromFile(function(domain) {
-                var sourceId = domain || generateSourceId();
-                var creativeId = generateCreativeId();
+            var sourceId = generateSourceId();
+            var creativeId = generateCreativeId();
 
-                var visitorId = localStorage.getItem('visitorId');
-                var currentIP = '127.0.0.1'; // Placeholder for actual IP retrieval logic
-                var visitorKey = currentIP + '_visited';
-                var lastVisitTime = localStorage.getItem(visitorKey);
+            var visitorId = localStorage.getItem('visitorId');
+            var currentIP = '127.0.0.1'; // Placeholder for actual IP retrieval logic
+            var visitorKey = currentIP + '_visited';
+            var lastVisitTime = localStorage.getItem(visitorKey);
 
-                var currentTime = Date.now();
-                if (!lastVisitTime || (currentTime - parseInt(lastVisitTime)) > (24 * 60 * 60 * 1000)) {
-                    visitorId = generateClickId(10);
-                    localStorage.setItem('visitorId', visitorId);
-                    localStorage.setItem(visitorKey, currentTime);
-                } else {
-                    redirectToPartnersPage();
-                    return;
-                }
+            var currentTime = Date.now();
+            if (!lastVisitTime || (currentTime - parseInt(lastVisitTime)) > (24 * 60 * 60 * 1000)) {
+                visitorId = generateClickId(10);
+                localStorage.setItem('visitorId', visitorId);
+                localStorage.setItem(visitorKey, currentTime);
+            } else {
+                redirectToPartnersPage();
+                return;
+            }
 
-                var clickId = generateClickId(100); 
-                var campaignOptions = ['737408'];
-                var lastCampaignIndex = parseInt(localStorage.getItem('lastCampaignIndex')) || 0;
-                var currentCampaignIndex = (lastCampaignIndex + 1) % campaignOptions.length;
-                localStorage.setItem('lastCampaignIndex', currentCampaignIndex);
-                var campaignId = campaignOptions[currentCampaignIndex];
+            var clickId = generateClickId(100); 
+            var campaignOptions = ['737408'];
+            var lastCampaignIndex = parseInt(localStorage.getItem('lastCampaignIndex')) || 0;
+            var currentCampaignIndex = (lastCampaignIndex + 1) % campaignOptions.length;
+            localStorage.setItem('lastCampaignIndex', currentCampaignIndex);
+            var campaignId = campaignOptions[currentCampaignIndex];
 
-                var params = [
-                    'campaign_id=' + encodeURIComponent(campaignId),
-                    'source_id=' + encodeURIComponent(sourceId),
-                    'creative_id=' + encodeURIComponent(creativeId),
-                    'click_id=' + encodeURIComponent(clickId),
-                    'visitor_id=' + encodeURIComponent(visitorId)
-                ];
+            var params = [
+                'campaign_id=' + encodeURIComponent(campaignId),
+                'source_id=' + encodeURIComponent(sourceId),
+                'creative_id=' + encodeURIComponent(creativeId),
+                'click_id=' + encodeURIComponent(clickId),
+            ];
 
-                url += '?' + params.join('&');
-                window.location.href = url;
-            });
+            url += '?' + params.join('&');
+            window.location.href = url;
         }
 
-        addUtmSourceFromDomain('https://12milf.us/');
+        addUtmSourceFromDomain('https://faphub.us/');
     </script>
 </head>
 <body>
