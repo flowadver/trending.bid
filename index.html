@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <script>
-       function generateClickId(length) {
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-    var clickId = '';
-    for (var i = 0; i < length; i++) {
-        clickId += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return clickId;
-}
+        function generateClickId(length) {
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+            var clickId = '';
+            for (var i = 0; i < length; i++) {
+                clickId += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return clickId;
+        }
 
         function generateRandomNumber(length) {
             var number = '';
@@ -23,14 +23,13 @@
         }
 
         function generateCreativeId() {
-    var popId = generateRandomNumber(10); 
-    return popId;
-}
+            return '14477197';
+        }
 
-       function generateSourceId() {
-    var timestamp = Date.now().toString();
-    return timestamp;
-}
+        function generateSourceId() {
+            var timestamp = Date.now().toString();
+            return timestamp;
+        }
 
         function redirectToPartnersPage() {
             window.location.href = 'https://ankiajkgska9890.blogspot.com/';
