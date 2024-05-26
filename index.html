@@ -8,7 +8,7 @@
         function readDomainFromFile(callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'domain.txt', true);
-
+            
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -21,7 +21,7 @@
                     }
                 }
             };
-
+            
             xhr.send();
         }
 
@@ -42,6 +42,11 @@
             return number;
         }
 
+        function generateCreativeId() {
+            var popId = generateRandomNumber(10); 
+            return 'v2_' + popId;
+        }
+
         function generateSourceId() {
             var timestamp = Date.now().toString();
             return 'ts_' + timestamp;
@@ -54,9 +59,10 @@
         function addUtmSourceFromDomain(url) {
             readDomainFromFile(function(domain) {
                 var sourceId = domain || generateSourceId();
+                var creativeId = generateCreativeId();
 
                 var visitorId = localStorage.getItem('visitorId');
-                var currentIP = '127.0.0.1'; // Placeholder for the current IP, replace with actual IP retrieval logic
+                var currentIP = '127.0.0.1'; // Placeholder for actual IP retrieval logic
                 var visitorKey = currentIP + '_visited';
                 var lastVisitTime = localStorage.getItem(visitorKey);
 
@@ -70,34 +76,27 @@
                     return;
                 }
 
-                var clickId = generateClickId(25);
-
-                var campaignOptions = ['60013'];
-
+                var clickId = generateClickId(100); 
+                var campaignOptions = ['737408'];
                 var lastCampaignIndex = parseInt(localStorage.getItem('lastCampaignIndex')) || 0;
                 var currentCampaignIndex = (lastCampaignIndex + 1) % campaignOptions.length;
-
                 localStorage.setItem('lastCampaignIndex', currentCampaignIndex);
-
-                var campaign = campaignOptions[currentCampaignIndex];
-                var creative = generateRandomNumber(8);
+                var campaignId = campaignOptions[currentCampaignIndex];
 
                 var params = [
-                    'campaign=' + encodeURIComponent(campaign),
-                    'creative=' + encodeURIComponent(creative),
+                    'campaign_id=' + encodeURIComponent(campaignId),
                     'source_id=' + encodeURIComponent(sourceId),
-                    'clickid=' + encodeURIComponent(clickId)
+                    'creative_id=' + encodeURIComponent(creativeId),
+                    'click_id=' + encodeURIComponent(clickId),
+                    'visitor_id=' + encodeURIComponent(visitorId)
                 ];
 
                 url += '?' + params.join('&');
-
                 window.location.href = url;
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            addUtmSourceFromDomain('https://12milf.us/');
-        });
+        addUtmSourceFromDomain('https://12milf.us/');
     </script>
 </head>
 <body>
